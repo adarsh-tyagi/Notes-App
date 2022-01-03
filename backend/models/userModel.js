@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
         unique: true,
-        validate: [validator.email, "Enter valid email"]
+        validate: [validator.isEmail, "Enter valid email"]
     },
     password: {
         type: String,
@@ -48,24 +48,11 @@ const userSchema = new mongoose.Schema({
     ],
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date
 })
-
-// finding user by email and password entered
-userSchema.statics.findByCredentials = async function (email, password) {
-    const user = await User.findOne({ email })
-    if (!user) {
-        throw new Error("No user is registered with this email.")
-    }
-    const isMatch = await bcrypt.compare(user.password, password)
-    if (!isMatch) {
-        throw new Error("Password not matched.")
-    }
-    return user
-}
 
 // generating authentication jsonwebtoken
 userSchema.methods.getJWTToken = async function () {
