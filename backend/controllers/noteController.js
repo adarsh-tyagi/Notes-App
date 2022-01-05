@@ -4,6 +4,14 @@ const ErrorHandler = require("../utils/errorHandler")
 
 // get all notes
 exports.getAllNotes = catchAsyncErrors(async (req, res, next) => {
+    if (req.query && req.query.search) {
+        const exp = new RegExp(req.query.search, 'ig')
+        const notes = await Note.find({ owner: req.user._id, title: exp })
+        if (!notes) {
+            return next(new ErrorHandler("Something went wrong", 500))
+        }
+        return res.status(200).json({success: true, count: notes.length, notes})
+    }
     const notes = await Note.find({ owner: req.user._id })
     if (!notes) {
         return next(new ErrorHandler("Something went wrong", 500))
