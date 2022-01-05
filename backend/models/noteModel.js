@@ -12,8 +12,8 @@ const noteSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        enum: ["#AB4E68", "#42273B", "4A5240", "08415C", "709176", "04A777", "00A5CF"],
-        default: "AB4E68"
+        enum: ["#AB4E68", "#42273B", "#4A5240", "#08415C", "#709176", "#04A777", "#00A5CF"],
+        default: "#AB4E68"
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

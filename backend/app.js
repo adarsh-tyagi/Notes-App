@@ -7,6 +7,7 @@ const bodyParser = require("body-parser")
 
 // import routers
 const userRouter = require("./routes/userRoutes")
+const noteRouter = require("./routes/noteRoutes")
 
 // initializing app
 const app = express()
@@ -17,7 +18,7 @@ app.use(fileUpload())
 
 // app routes
 app.use("/api/v1/user", userRouter)
-
+app.use("/api/v1/note", noteRouter)
 
 app.use(errorMiddleware)
 

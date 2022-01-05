@@ -30,11 +30,10 @@ exports.createNote = catchAsyncErrors(async (req, res, next) => {
 
 // delete a note
 exports.deleteNote = catchAsyncErrors(async (req, res, next) => {
-    const note = await Note.find({ _id: req.params.id, owner: req.user._id })
+    const note = await Note.deleteOne({ _id: req.params.id, owner: req.user._id })
     if (!note) {
         return next(new ErrorHandler("No such note found", 404))
     }
-    await note.remove()
     res.status(200).json({success: true, message: "Note deleted successfully"})
 })
 
@@ -50,10 +49,10 @@ exports.updateNote = catchAsyncErrors(async (req, res, next) => {
     if (!note) {
         return next(new ErrorHandler("No such note found", 404))
     }
-    const note = await Note.findByIdAndUpdate(req.params.id, newNoteDate, {
+    const updatedNote = await Note.findByIdAndUpdate(req.params.id, newNoteDate, {
         new: true, 
         runValidators: true, 
         useFindAndModify: false
     })
-    res.status(200).json({success: true, message: "Note edited successfully", note})
+    res.status(200).json({success: true, message: "Note edited successfully", updatedNote})
 })
