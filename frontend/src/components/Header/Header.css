@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: space-evenly;
     border-bottom: 2px solid #1DD3B0;
+    flex: 1;
 }
 
 .header__left > a{
@@ -23,7 +24,36 @@
 }
 
 .header__middle{
-    
+    flex: 0.5;
+}
+.header__middle > svg{
+    color: #bbb;
+    cursor: pointer;
+}
+
+.header__middle > form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid #404040;
+    background-color: #252525;
+    color: #bbb;
+    border-radius: 8px;
+}
+.header__middle > form > input{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0.6rem 0.75rem;
+    background-color: transparent;
+    font-size: 1.2rem;
+    color: #ddd;
+}
+.header__middle > form > svg{
+    padding-right: 0.5rem;
+    font-size: 1.75rem;
+    cursor: pointer;
 }
 
 .header__right > img{
@@ -33,4 +63,27 @@
 }
 .header__right > img:hover{
     width: 55px;
+}
+
+@media (max-width: 800px){
+    .header__left > a{
+        font-size: 1.75rem;
+    }
+    .header__left > a:hover{
+        font-size: 1.8rem;
+    }
+    .header__middle{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .header__middle > svg{
+        font-size: 2rem;
+    }
+    .header__right > img{
+        width: 40px;
+    }
+    .header__right > img:hover{
+        width: 45px;
+    }
 }
