@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, user }) => {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
 
