@@ -4,9 +4,13 @@ import Header from "./components/Header/Header";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Login from "./components/User/Login";
-import Home from "./components/Home";
+import Home from "./components/Note/Home";
 import { loadUser } from "./features/userSlice";
 import Loader from "./components/Loader/Loader";
+import Profile from "./components/User/Profile";
+import UpdateProfile from "./components/User/UpdateProfile";
+import ForgotPassword from "./components/User/ForgotPassword";
+import ResetPassword from "./components/User/ResetPassword";
 
 const App = () => {
   const { isAuthenticated, loading, user } = useSelector((state) => state.user);
@@ -27,6 +31,14 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/signin" element={<Login />} />
+            <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/update/profile" element={<UpdateProfile />} />
+            <Route exact path="/password/forgot" element={<ForgotPassword />} />
+            <Route
+              exact
+              path="/password/reset/:token"
+              element={<ResetPassword />}
+            />
           </Routes>
         </Router>
       )}

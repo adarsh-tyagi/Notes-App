@@ -38,14 +38,6 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     },
-    tokens: [
-        {
-            token: {
-                type: String,
-                required: true
-            }
-        }
-    ],
     createdAt: {
         type: Date,
         default: Date.now
@@ -60,7 +52,6 @@ userSchema.methods.getJWTToken = async function () {
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE
     })
-    user.tokens = user.tokens.concat({ token })
     await user.save()
     return token
 }

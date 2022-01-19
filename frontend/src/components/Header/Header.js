@@ -57,7 +57,7 @@ const Header = ({ isAuthenticated, user }) => {
 
       {isAuthenticated ? (
         <Link to="/profile" className="header__right">
-          <img src="/image/defaultProfile.svg" alt="profile" />
+          <img src={user.avatar.url} alt="profile" />
         </Link>
       ) : (
         <Link to="/signin" className="header__right">

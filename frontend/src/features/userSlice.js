@@ -1,26 +1,38 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loadUser = createAsyncThunk("user/loadUser", async () => {
-  try {
-    const { data } = await axios.get("http://localhost:5000/api/v1/user/me");
-    return data;
-  } catch (error) {
-    throw error.response.data.message;
+export const loadUser = createAsyncThunk(
+  "user/loadUser",
+  async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+      const { data } = await axios.get(
+        "http://localhost:5000/api/v1/user/me",
+        config
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
   }
-});
+);
 
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (userdata) => {
     try {
-      
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axios.post(
         `http://localhost:5000/api/v1/user/login`,
         userdata,
         config
       );
+      localStorage.setItem("token", data.token);
       return data;
     } catch (error) {
       throw error.response.data.message;
@@ -38,6 +50,7 @@ export const registerUser = createAsyncThunk(
         userdata,
         config
       );
+      localStorage.setItem("token", data.token);
       return data;
     } catch (error) {
       throw error.response.data.message;
@@ -45,27 +58,46 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
-  try {
-    const { data } = await axios.post(
-      "http://localhost:5000/api/v1/user/logout"
-    );
-    return data;
-  } catch (error) {
-    throw error.response.data.message;
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+      const { data } = await axios.get(
+        "http://localhost:5000/api/v1/user/logout",
+        config
+      );
+
+      localStorage.removeItem("token");
+      return data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
   }
-});
+);
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (userdata) => {
     try {
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: token,
+        },
+      };
       const { data } = await axios.put(
         `http://localhost:5000/api/v1/user/me`,
         userdata,
         config
       );
+
       return data;
     } catch (error) {
       throw error.response.data.message;
@@ -73,14 +105,27 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const deleteUser = createAsyncThunk("user/deleteUser", async () => {
-  try {
-    const { data } = await axios.delete("http://localhost:5000/api/v1/user/me");
-    return data;
-  } catch (error) {
-    throw error.response.data.message;
+export const deleteUser = createAsyncThunk(
+  "user/deleteUser",
+  async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+      const { data } = await axios.delete(
+        "http://localhost:5000/api/v1/user/me",
+        config
+      );
+      localStorage.removeItem("token");
+      return data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
   }
-});
+);
 
 export const forgotPasswordUser = createAsyncThunk(
   "user/forgotPasswordUser",
@@ -101,12 +146,12 @@ export const forgotPasswordUser = createAsyncThunk(
 
 export const resetPasswordUser = createAsyncThunk(
   "user/resetPasswordUser",
-  async (token, passwords) => {
+  async (userData) => {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axios.put(
-        `http://localhost:5000/api/v1/user/reset/password/${token}`,
-        passwords,
+        `http://localhost:5000/api/v1/user/reset/password/${userData.token}`,
+        userData.myForm,
         config
       );
       return data;
@@ -128,17 +173,20 @@ export const userSlice = createSlice({
     isDeleted: false,
   },
 
-  reducers: {},
+  reducers: {
+    clearErrors: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: {
     [loadUser.pending]: (state, action) => {
       state.loading = true;
+      state.isAuthenticated = false;
     },
     [loadUser.fulfilled]: (state, action) => {
-      console.log(action);
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
-      state.error = null;
     },
     [loadUser.rejected]: (state, action) => {
       state.loading = false;
@@ -149,12 +197,12 @@ export const userSlice = createSlice({
 
     [loginUser.pending]: (state, action) => {
       state.loading = true;
+      state.isAuthenticated = false;
     },
     [loginUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
-      state.error = null;
     },
     [loginUser.rejected]: (state, action) => {
       state.loading = false;
@@ -165,12 +213,12 @@ export const userSlice = createSlice({
 
     [registerUser.pending]: (state, action) => {
       state.loading = true;
+      state.isAuthenticated = false;
     },
     [registerUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
-      state.error = null;
     },
     [registerUser.rejected]: (state, action) => {
       state.loading = false;
@@ -185,6 +233,7 @@ export const userSlice = createSlice({
     [logoutUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
+      state.user = null;
       state.message = action.payload.message;
     },
     [logoutUser.rejected]: (state, action) => {
@@ -197,13 +246,17 @@ export const userSlice = createSlice({
     },
     [updateUser.fulfilled]: (state, action) => {
       state.loading = false;
+      // state.isAuthenticated = true;
+      // state.user = action.payload.user;
       state.isUpdated = action.payload.success;
       state.message = action.payload.message;
     },
     [updateUser.rejected]: (state, action) => {
       state.loading = false;
+      // state.isAuthenticated = false;
+      // state.user = null;
       state.error = action.payload;
-      state.isUpdated = false;
+      // state.isUpdated = false;
     },
 
     [deleteUser.pending]: (state, action) => {
@@ -211,12 +264,14 @@ export const userSlice = createSlice({
     },
     [deleteUser.fulfilled]: (state, action) => {
       state.loading = false;
+      state.isAuthenticated = false;
+      state.user = null;
       state.isDeleted = action.payload.success;
       state.message = action.payload.message;
     },
     [deleteUser.rejected]: (state, action) => {
       state.loading = false;
-      state.isDeleted = false;
+      // state.isDeleted = false;
       state.error = action.payload;
     },
 
@@ -245,5 +300,7 @@ export const userSlice = createSlice({
     },
   },
 });
+
+export const { clearErrors } = userSlice.actions;
 
 export default userSlice.reducer;

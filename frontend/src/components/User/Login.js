@@ -20,7 +20,7 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [photo, setPhoto] = useState("/image/defaultProfile.svg");
+  const [photo, setPhoto] = useState("");
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -115,9 +115,9 @@ const Login = () => {
             <div>
               <PersonIcon />
               <input
-                type="email"
+                type="text"
                 required
-                placeholder="Email"
+                placeholder="Name"
                 name="name"
                 value={name}
                 onChange={registerDataChange}
