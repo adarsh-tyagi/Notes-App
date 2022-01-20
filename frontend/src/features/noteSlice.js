@@ -102,7 +102,7 @@ export const noteSlice = createSlice({
   name: "note",
   initialState: {
     loading: true,
-    notes: null,
+    notes: [],
     note: null,
     error: null,
     message: null,
@@ -125,7 +125,7 @@ export const noteSlice = createSlice({
     },
     [loadNotes.rejected]: (state, action) => {
       state.loading = false;
-      state.notes = null;
+      state.notes = [];
       state.error = action.payload;
     },
 

@@ -11,6 +11,7 @@ import Profile from "./components/User/Profile";
 import UpdateProfile from "./components/User/UpdateProfile";
 import ForgotPassword from "./components/User/ForgotPassword";
 import ResetPassword from "./components/User/ResetPassword";
+import CreateNote from "./components/Note/CreateNote";
 
 const App = () => {
   const { isAuthenticated, loading, user } = useSelector((state) => state.user);
@@ -38,7 +39,8 @@ const App = () => {
               exact
               path="/password/reset/:token"
               element={<ResetPassword />}
-            />
+              />
+              <Route exact path="/create" element={<CreateNote />} />
           </Routes>
         </Router>
       )}
