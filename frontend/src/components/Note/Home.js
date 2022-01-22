@@ -7,6 +7,7 @@ import NoteCard from "./NoteCard";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
+
 const Home = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const { loading, notes, error } = useSelector((state) => state.note);
@@ -44,7 +45,8 @@ const Home = () => {
             </Fragment>
           ) : (
             <h1>Please sign in and create your notes now</h1>
-          )}
+            )}
+          
         </div>
       )}
     </Fragment>

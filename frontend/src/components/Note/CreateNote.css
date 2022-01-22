@@ -1,0 +1,9 @@
+.create__container{
+    margin-top: 5rem;
+}
+
+.color__container div{
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+}

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loadNotes = createAsyncThunk("note/loadNotes", async () => {
+export const loadNotes = createAsyncThunk("note/loadNotes", async (search='') => {
   try {
     const token = localStorage.getItem("token");
     const config = {
@@ -10,9 +10,10 @@ export const loadNotes = createAsyncThunk("note/loadNotes", async () => {
       },
     };
     const { data } = await axios.get(
-      "http://localhost:5000/api/v1/note",
+      `http://localhost:5000/api/v1/note?search=${search}`,
       config
     );
+    console.log(data);
     return data;
   } catch (error) {
     throw error.response.data.message;
@@ -62,7 +63,7 @@ export const createNote = createAsyncThunk(
   }
 );
 
-export const editNote = createAsyncThunk("note/editNote", async (id) => {
+export const editNote = createAsyncThunk("note/editNote", async (noteData) => {
   try {
     const token = localStorage.getItem("token");
     const config = {
@@ -71,7 +72,8 @@ export const editNote = createAsyncThunk("note/editNote", async (id) => {
       },
     };
     const { data } = await axios.put(
-      `http://localhost:5000/api/v1/note/${id}`,
+      `http://localhost:5000/api/v1/note/${noteData.id}`,
+      noteData.myForm,
       config
     );
     return data;
@@ -103,7 +105,7 @@ export const noteSlice = createSlice({
   initialState: {
     loading: true,
     notes: [],
-    note: null,
+    note: {},
     error: null,
     message: null,
   },
@@ -131,6 +133,7 @@ export const noteSlice = createSlice({
 
     [loadNoteDetails.pending]: (state, action) => {
       state.loading = true;
+      state.note = null
     },
     [loadNoteDetails.fulfilled]: (state, action) => {
       state.loading = false;

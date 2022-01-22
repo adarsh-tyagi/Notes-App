@@ -2,13 +2,28 @@ import React, { useState, useEffect } from "react";
 import "./Header.css";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, loadNotes } from "../../features/noteSlice";
+import Backdrop from "@mui/material/Backdrop";
 
 const Header = ({ isAuthenticated, user }) => {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
+  const [showBackdrop, setShowBackdrop] = useState(false)
 
-  const submitHandler = () => {};
+  const {loading, error, notes} = useSelector(state => state.note)
+  const dispatch = useDispatch()
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(loadNotes(search))
+    setShowBackdrop(true)
+  };
+  
+  const handleClose = () => {
+    setShowBackdrop(false);
+  };
 
   const toggleSearchIcon = () => {
     window.innerWidth <= 800 ? setShow(true) : setShow(false);
@@ -29,6 +44,13 @@ const Header = ({ isAuthenticated, user }) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   if (error) {
+  //     console.log(error);
+  //     dispatch(clearErrors())
+  //   }
+  // }, [dispatch])
+
   return (
     <div className="header">
       {window.innerWidth <= 800 && !show ? (
@@ -43,7 +65,7 @@ const Header = ({ isAuthenticated, user }) => {
         {show ? (
           <SearchIcon onClick={() => setShow(false)} />
         ) : (
-          <form onSubmit={submitHandler}>
+          <form onSubmit={(e) => submitHandler(e)}>
             <input
               type="text"
               placeholder="Search"
@@ -64,6 +86,16 @@ const Header = ({ isAuthenticated, user }) => {
           <p>Sign In</p>
         </Link>
       )}
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={showBackdrop}
+        onClick={handleClose}
+      >
+        {notes.map(item => (
+          <Link key={item._id} to={`/${item._id}`}>{item.title}</Link>
+        ))}
+      </Backdrop>
     </div>
   );
 };

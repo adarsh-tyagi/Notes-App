@@ -40,7 +40,7 @@ const Profile = () => {
           <div>
             <p>{user.name}</p>
             <p>{user.email}</p>
-            <p>{user.createdAt}</p>
+            <p>{user.createdAt.substring(0, 10)}</p>
             <button onClick={logoutHandler}>Logout</button>
             <button onClick={deleteHandler}>Delete Account</button>
           </div>
