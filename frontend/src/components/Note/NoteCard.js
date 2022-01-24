@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Home.css"
 
 const NoteCard = ({ note }) => {
   const noteContent =
@@ -8,10 +9,10 @@ const NoteCard = ({ note }) => {
       : note.description;
 
   return (
-    <Link to={`/${note._id}`}>
+    <Link to={`/${note._id}`} className="note__link">
       <div className="note__box" style={{ backgroundColor: `${note.color}` }}>
-        <p>{note.title}</p>
-        <p>{noteContent}</p>
+        <p className="note__title">{note.title}</p>
+        <p className="note__description">{noteContent}</p>
         <div>
           <small>{`Created on ${note.createdAt.substring(0, 10)}`}</small>
           <small>

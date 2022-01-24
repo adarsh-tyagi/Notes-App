@@ -1,3 +1,86 @@
 .profile__container{
-    margin-top: 10rem;
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container__one{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container__one > h1{
+    font-size: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.container__one > img{
+    margin-bottom: 1.5rem;
+    width: 400px;
+    height: 350px;
+    border-radius: 50%;
+    border: 2px solid #1DD3B0;
+}
+
+.container__one > a{
+    font-weight: normal;
+    font-family: monospace;
+    transition: 100ms;
+    margin-bottom: 2rem;
+}
+.container__one > a:hover{
+    color: #09967a;
+    font-weight: bold;
+}
+
+@media (max-width: 600px){
+    .container__one > img{
+        width: 300px;
+        height: 250px;
+    }
+}
+
+.container__two{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.container__two > p{
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0.5rem 0;
+}
+
+.container__two > button{
+    margin-top: 1rem;
+    outline: none;
+    border: none;
+    padding: 0.75rem 0.9rem;
+    font-size: 1rem;
+    background-color: #0fb997;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.container__two > button:hover{
+    background-color: #079b7d;
+}
+
+.delete{
+    background-color: rgb(252, 74, 74) !important;
+}
+.delete:hover{
+    background-color: red !important;
 }

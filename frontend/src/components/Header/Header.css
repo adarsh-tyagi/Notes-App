@@ -57,14 +57,15 @@
 }
 
 .header__right > img{
-    width: 50px;
+    width: 65px;
+    height: 60px;
     cursor: pointer;
     transition: 250ms;
     border: 1px solid #1DD3B0;
     border-radius: 50%;
 }
 .header__right > img:hover{
-    width: 55px;
+    border: 2px solid #1DD3B0;
 }
 
 .header__right > p, a{
@@ -95,9 +96,8 @@
         font-size: 2rem;
     }
     .header__right > img{
-        width: 40px;
+        width: 55px;
+        height: 50px;
     }
-    .header__right > img:hover{
-        width: 45px;
-    }
+    
 }

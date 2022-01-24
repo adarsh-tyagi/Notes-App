@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, loadNotes } from "../../features/noteSlice";
+import { loadNotes } from "../../features/noteSlice";
 import Backdrop from "@mui/material/Backdrop";
 
 const Header = ({ isAuthenticated, user }) => {
@@ -12,7 +12,7 @@ const Header = ({ isAuthenticated, user }) => {
   const [show, setShow] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false)
 
-  const {loading, error, notes} = useSelector(state => state.note)
+  const {notes} = useSelector(state => state.note)
   const dispatch = useDispatch()
 
   const submitHandler = (e) => {

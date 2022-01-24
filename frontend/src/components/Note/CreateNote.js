@@ -2,6 +2,7 @@ import React, { Fragment, useState} from "react";
 import { useDispatch} from "react-redux"
 import {useNavigate} from "react-router-dom"
 import { createNote, loadNotes } from "../../features/noteSlice";
+import MetaData from "../MetaData";
 import "./CreateNote.css";
 
 const CreateNote = () => {
@@ -16,7 +17,7 @@ const CreateNote = () => {
     e.preventDefault()
     const myForm = new FormData()
     myForm.set("title", title)
-    myForm.set("description", description)
+    myForm.set("description", description) 
     myForm.set("color", color)
     dispatch(createNote(myForm))
     dispatch(loadNotes())
@@ -26,8 +27,9 @@ const CreateNote = () => {
 
   return (
     <Fragment>
+      <MetaData title="Create Note" />
       <div className="create__container">
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} className="create__form">
           <input
             type="text"
             name="title"

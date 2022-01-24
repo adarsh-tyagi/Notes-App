@@ -1,7 +1,73 @@
 .home__container {
   margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-a{
+.home__container > h1{
+  font-size: 5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+}
+
+.home__container > svg{
+  color: #1DD3B0;
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.home__container > svg:hover{
+  font-size: 5.5rem;
+  
+}
+
+.home__container > div{
+  max-width: 800px;
+  width: 90%;
+  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+}
+
+/* Style notecard */
+
+.note__link{
   text-decoration: none;
+  color: white;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.note__box{
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.note__box:hover{
+box-shadow: 3px 3px 2px 0px rgba(209,198,198,0.74);
+-webkit-box-shadow: 3px 3px 2px 0px rgba(209,198,198,0.74);
+-moz-box-shadow: 3px 3px 2px 0px rgba(209,198,198,0.74);
+}
+
+.note__title{
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.font__description{
+  font-size: 0.9rem;
+  font-family: monospace;
+}
+
+.note__box > div{
+  padding-top: 1.2rem;
+  font-size: 0.8rem;
+  color: rgba(218, 216, 216, 0.829);
+}
+.note__box > div > small{
+  display: block;
 }

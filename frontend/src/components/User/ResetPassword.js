@@ -5,11 +5,15 @@ import Loader from "../Loader/Loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordUser } from "../../features/userSlice";
+import { useAlert } from "react-alert";
+import MetaData from "../MetaData";
 
 const ResetPassword = () => {
-  const { loading, message } = useSelector((state) => state.user);
+  const { loading, message, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alert = useAlert()
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -26,14 +30,19 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
+    if (error) {
+      alert.error(error)
+    }
     if (message) {
       console.log(message);
+      alert.info(message)
       navigate("/signin");
     }
-  }, [message, navigate]);
+  }, [message, navigate, alert, error]);
 
   return (
     <Fragment>
+      <MetaData title="Reset Password" />
       {loading ? (
         <Loader />
       ) : (

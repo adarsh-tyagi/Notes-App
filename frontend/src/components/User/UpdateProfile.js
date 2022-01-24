@@ -5,18 +5,21 @@ import { updateUser, loadUser } from "../../features/userSlice";
 import Loader from "../Loader/Loader";
 import PersonIcon from "@mui/icons-material/Person";
 import "./UpdateProfile.css"
+import { useAlert } from "react-alert";
+import MetaData from "../MetaData";
 
 const UpdateProfile = () => {
-  const { loading, isAuthenticated, user, isUpdated } = useSelector(
+  const { loading, isAuthenticated, user, isUpdated, message, error } = useSelector(
     (state) => state.user
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alert = useAlert()
 
   const [name, setName] = useState(user.name);
   const [avatar, setAvatar] = useState("");
 
-  const updateDataChange = (e) => {
+  const updateDataChange = (e) => { 
     if (e.target.name === "avatar") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -42,6 +45,12 @@ const UpdateProfile = () => {
   };
 
   useEffect(() => {
+    if (error) {
+      alert.error(error)
+    }
+    if (message) {
+      alert.info(message)
+    }
     if (isAuthenticated === false) {
       navigate("/signin");
     }
@@ -49,10 +58,11 @@ const UpdateProfile = () => {
       dispatch(loadUser());
       navigate("/profile");
     }
-  }, [isAuthenticated, navigate, isUpdated, dispatch]);
+  }, [isAuthenticated, navigate, isUpdated, dispatch, alert, error, message]);
 
   return (
     <Fragment>
+      <MetaData title="Update Profile" />
       {loading ? (
         <Loader />
       ) : (

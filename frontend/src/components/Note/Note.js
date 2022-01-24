@@ -1,20 +1,22 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   clearErrors,
   deleteNote,
   editNote,
-  loadNoteDetails,
   loadNotes,
 } from "../../features/noteSlice";
 import Loader from "../Loader/Loader";
+import MetaData from "../MetaData";
 import "./Note.css";
 
 const Note = () => {
   const { loading, notes, error, message } = useSelector((state) => state.note);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alert = useAlert()
 
   const { id } = useParams();
 
@@ -42,11 +44,13 @@ const Note = () => {
   useEffect(() => {
     if (error) {
       console.log(error);
+      alert.error(error)
       dispatch(clearErrors());
       navigate("/");
     }
     if (message) {
       console.log(message);
+      alert.info(message)
     }
     // dispatch(loadNoteDetails(id));
     const note = notes.find((item) => item._id === id);
@@ -54,11 +58,12 @@ const Note = () => {
     setTitle(note.title);
     setDescription(note.description);
     setColor(note.color);
-  }, [error, dispatch, navigate, message, id]);
+  }, [error, dispatch, navigate, message, id, alert, notes]);
   
 
   return (
     <Fragment>
+      <MetaData title="Note Details" />
       {loading ? (
         <Loader />
       ) : (

@@ -1,5 +1,12 @@
 .create__container{
-    margin-top: 5rem;
+    margin-top: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create__form{
+    
 }
 
 .color__container div{

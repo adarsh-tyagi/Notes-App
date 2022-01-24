@@ -15,7 +15,6 @@ exports.getAllNotes = catchAsyncErrors(async (req, res, next) => {
   if (!notes) {
     return next(new ErrorHandler("Something went wrong", 500));
   }
-  console.log(notes);
   res.status(200).json({ success: true, count: notes.length, notes });
 });
 

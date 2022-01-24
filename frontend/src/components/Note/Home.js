@@ -6,15 +6,15 @@ import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NoteCard from "./NoteCard";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-
+import {useAlert} from "react-alert"
 
 const Home = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
-  const { loading, notes, error } = useSelector((state) => state.note);
+  const { loading, notes, error, message } = useSelector((state) => state.note);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+  const alert = useAlert()
 
   const clickHandler = () => {
     navigate("/create");
@@ -23,10 +23,14 @@ const Home = () => {
   useEffect(() => {
     if (error) {
       console.log(error);
+      alert.error(error)
       dispatch(clearErrors());
     }
+    if (message) {
+      alert.info(message)
+    }
     dispatch(loadNotes());
-  }, [dispatch, error]);
+  }, [dispatch, error, alert]);
 
   return (
     <Fragment>

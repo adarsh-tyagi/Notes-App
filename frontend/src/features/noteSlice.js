@@ -13,7 +13,6 @@ export const loadNotes = createAsyncThunk("note/loadNotes", async (search='') =>
       `http://localhost:5000/api/v1/note?search=${search}`,
       config
     );
-    console.log(data);
     return data;
   } catch (error) {
     throw error.response.data.message;

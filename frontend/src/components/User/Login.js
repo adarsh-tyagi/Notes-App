@@ -8,13 +8,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { loginUser, registerUser } from "../../features/userSlice";
 import { useNavigate } from "react-router-dom";
+import MetaData from "../MetaData";
 
 const Login = () => {
   const dispatch = useDispatch();
-  // const alert = useAlert();
+  const alert = useAlert();
   const navigate = useNavigate();
 
-  const { isAuthenticated, error } = useSelector((state) => state.user);
+  const { isAuthenticated, error} = useSelector((state) => state.user);
 
   const [login, setLogin] = useState(true);
   const [name, setName] = useState("");
@@ -60,7 +61,7 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
-      // alert.error(error)
+      alert.error(error)
     }
     if (isAuthenticated) {
       navigate("/")
@@ -69,6 +70,7 @@ const Login = () => {
 
   return (
     <Fragment>
+      <MetaData title="Login" />
       <div className="login__container">
         <div className="switch__btn">
           <button
