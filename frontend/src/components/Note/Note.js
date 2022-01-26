@@ -67,56 +67,70 @@ const Note = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="note__container">
-          <form onSubmit={editHandler}>
+        <div className="create__container">
+          <form
+            onSubmit={editHandler}
+            className="create__form"
+            style={{ backgroundColor: color }}
+          >
             <input
               type="text"
               name="title"
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              style={{ backgroundColor: color }}
             />
             <textarea
               placeholder="Your note"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               name="description"
+              rows="15"
+              style={{ backgroundColor: color }}
             ></textarea>
             <div className="color__container">
               <div
                 style={{ backgroundColor: "#AB4E68" }}
                 onClick={() => setColor("#AB4E68")}
+                className={color === "#AB4E68" ? "active" : ""}
               ></div>
               <div
                 style={{ backgroundColor: "#42273B" }}
                 onClick={() => setColor("#42273B")}
+                className={color === "#42273B" ? "active" : ""}
               ></div>
               <div
                 style={{ backgroundColor: "#4A5240" }}
                 onClick={() => setColor("#4A5240")}
+                className={color === "#4A5240" ? "active" : ""}
               ></div>
               <div
                 style={{ backgroundColor: "#08415C" }}
                 onClick={() => setColor("#08415C")}
+                className={color === "#08415C" ? "active" : ""}
               ></div>
               <div
                 style={{ backgroundColor: "#709176" }}
                 onClick={() => setColor("#709176")}
+                className={color === "#709176" ? "active" : ""}
               ></div>
               <div
                 style={{ backgroundColor: "#04A777" }}
                 onClick={() => setColor("#04A777")}
+                className={color === "#04A777" ? "active" : ""}
               ></div>
               <div
                 style={{ backgroundColor: "#00A5CF" }}
                 onClick={() => setColor("#00A5CF")}
+                className={color === "#00A5CF" ? "active" : ""}
               ></div>
             </div>
-            <input type="submit" value="Update" />
+            <input type="submit" value="Update" className="create__btn update__btn" />
           </form>
-          <div>
-            <button onClick={() => navigate("/")}>Back</button>
-            <button onClick={deleteHandler}>Delete</button>
+          <div className="btn__container">
+            <button onClick={() => navigate("/")} className="back">Back</button>
+            <button onClick={deleteHandler} className="delete">Delete</button>
           </div>
         </div>
       )}

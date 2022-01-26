@@ -10,7 +10,6 @@ const sendEmail = require("../utils/sendEmail");
 // register user
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password, avatar } = req.body;
-  console.log(req.body);
   const secure_url = process.env.DEFAULT_PROFILE_URL;
   const public_id = process.env.DEFAULT_PROFILE_ID;
   if (avatar !== "") {
@@ -60,7 +59,6 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
 
 // logout user
 exports.logoutUser = catchAsyncError(async (req, res, next) => {
-  console.log("in here");
   res.status(200).json({ success: true, message: "Logged out successfully" });
 });
 

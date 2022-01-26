@@ -13,10 +13,11 @@ import ForgotPassword from "./components/User/ForgotPassword";
 import ResetPassword from "./components/User/ResetPassword";
 import CreateNote from "./components/Note/CreateNote";
 import Note from "./components/Note/Note";
+import ProtectRoute from "./components/ProtectRoute";
 
 const App = () => {
   const { isAuthenticated, loading, user } = useSelector((state) => state.user);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,16 +35,35 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/signin" element={<Login />} />
-            <Route exact path="/profile" element={<Profile />} />
-            <Route exact path="/update/profile" element={<UpdateProfile />} />
+            <Route
+              exact
+              path="/profile"
+              element={<ProtectRoute component={Profile} />}
+            />
+
+            <Route
+              exact
+              path="/update/profile"
+              element={<ProtectRoute component={UpdateProfile} />}
+            />
+
             <Route exact path="/password/forgot" element={<ForgotPassword />} />
             <Route
               exact
               path="/password/reset/:token"
               element={<ResetPassword />}
             />
-            <Route exact path="/create" element={<CreateNote />} />
-            <Route exact path="/:id" element={<Note />} />
+            <Route
+              exact
+              path="/create"
+              element={<ProtectRoute component={CreateNote} />}
+            />
+
+            <Route
+              exact
+              path="/:id"
+              element={<ProtectRoute component={Note} />}
+            />
           </Routes>
         </Router>
       )}
