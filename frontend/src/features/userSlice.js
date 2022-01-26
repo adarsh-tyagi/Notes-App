@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL } from "../url"
 
 export const loadUser = createAsyncThunk(
   "user/loadUser",
@@ -12,7 +13,7 @@ export const loadUser = createAsyncThunk(
         },
       };
       const { data } = await axios.get(
-        "http://localhost:5000/api/v1/user/me",
+        `${API_URL}/user/me`,
         config
       );
       return data;
@@ -28,7 +29,7 @@ export const loginUser = createAsyncThunk(
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/user/login`,
+        `${API_URL}/user/login`,
         userdata,
         config
       );
@@ -46,7 +47,7 @@ export const registerUser = createAsyncThunk(
     try {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/user/register`,
+        `${API_URL}/user/register`,
         userdata,
         config
       );
@@ -68,10 +69,7 @@ export const logoutUser = createAsyncThunk(
           Authorization: token,
         },
       };
-      const { data } = await axios.get(
-        "http://localhost:5000/api/v1/user/logout",
-        config
-      );
+      const { data } = await axios.get(`${API_URL}/user/logout`, config);
 
       localStorage.removeItem("token");
       return data;
@@ -92,11 +90,7 @@ export const updateUser = createAsyncThunk(
           Authorization: token,
         },
       };
-      const { data } = await axios.put(
-        `http://localhost:5000/api/v1/user/me`,
-        userdata,
-        config
-      );
+      const { data } = await axios.put(`${API_URL}/user/me`, userdata, config);
 
       return data;
     } catch (error) {
@@ -115,10 +109,7 @@ export const deleteUser = createAsyncThunk(
           Authorization: token,
         },
       };
-      const { data } = await axios.delete(
-        "http://localhost:5000/api/v1/user/me",
-        config
-      );
+      const { data } = await axios.delete(`${API_URL}/user/me`, config);
       localStorage.removeItem("token");
       return data;
     } catch (error) {
@@ -133,7 +124,7 @@ export const forgotPasswordUser = createAsyncThunk(
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/user/forgot/password`,
+        `${API_URL}/user/forgot/password`,
         email,
         config
       );
@@ -150,7 +141,7 @@ export const resetPasswordUser = createAsyncThunk(
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axios.put(
-        `http://localhost:5000/api/v1/user/reset/password/${userData.token}`,
+        `${API_URL}/user/reset/password/${userData.token}`,
         userData.myForm,
         config
       );
@@ -176,7 +167,7 @@ export const userSlice = createSlice({
   reducers: {
     clearErrors: (state) => {
       state.error = null;
-    },
+    }, 
   },
   extraReducers: {
     [loadUser.pending]: (state, action) => {

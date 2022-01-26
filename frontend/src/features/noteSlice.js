@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL } from "../url";
 
 export const loadNotes = createAsyncThunk("note/loadNotes", async (search='') => {
   try {
@@ -10,7 +11,7 @@ export const loadNotes = createAsyncThunk("note/loadNotes", async (search='') =>
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/note?search=${search}`,
+      `${API_URL}/note?search=${search}`,
       config
     );
     return data;
@@ -29,10 +30,7 @@ export const loadNoteDetails = createAsyncThunk(
           Authorization: token,
         },
       };
-      const { data } = await axios.get(
-        `http://localhost:5000/api/v1/note/${id}`,
-        config
-      );
+      const { data } = await axios.get(`${API_URL}/note/${id}`, config);
       return data;
     } catch (error) {
       throw error.response.data.message;
@@ -50,11 +48,7 @@ export const createNote = createAsyncThunk(
           Authorization: token,
         },
       };
-      const { data } = await axios.post(
-        "http://localhost:5000/api/v1/note",
-        noteData,
-        config
-      );
+      const { data } = await axios.post(`${API_URL}/note`, noteData, config);
       return data;
     } catch (error) {
       throw error.response.data.message;
@@ -71,7 +65,7 @@ export const editNote = createAsyncThunk("note/editNote", async (noteData) => {
       },
     };
     const { data } = await axios.put(
-      `http://localhost:5000/api/v1/note/${noteData.id}`,
+      `${API_URL}/note/${noteData.id}`,
       noteData.myForm,
       config
     );
@@ -89,10 +83,7 @@ export const deleteNote = createAsyncThunk("note/deleteNote", async (id) => {
         Authorization: token,
       },
     };
-    const { data } = await axios.delete(
-      `http://localhost:5000/api/v1/note/${id}`,
-      config
-    );
+    const { data } = await axios.delete(`${API_URL}/note/${id}`, config);
     return data;
   } catch (error) {
     throw error.response.data.message;
@@ -113,7 +104,7 @@ export const noteSlice = createSlice({
     clearErrors: (state) => {
       state.error = null;
     },
-  },
+  }, 
 
   extraReducers: {
     [loadNotes.pending]: (state, action) => {

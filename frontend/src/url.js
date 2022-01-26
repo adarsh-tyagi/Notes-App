@@ -1,0 +1,1 @@
+export const API_URL = "https://adarsh-notesapp.herokuapp.com/api/v1";
