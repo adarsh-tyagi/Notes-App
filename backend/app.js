@@ -1,27 +1,37 @@
-const express = require("express")
-require("dotenv").config({ path: "./backend/config/config.env" })
-const fileUpload = require("express-fileupload")
-const cookieParser = require("cookie-parser")
-const errorMiddleware = require("./middleware/error")
-const bodyParser = require("body-parser")
-const cors = require("cors")
+const express = require("express");
+const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
+const errorMiddleware = require("./middleware/error");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
+
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: "backend/config/config.env" });
+}
 
 // import routers
-const userRouter = require("./routes/userRoutes")
-const noteRouter = require("./routes/noteRoutes")
+const userRouter = require("./routes/userRoutes");
+const noteRouter = require("./routes/noteRoutes");
 
 // initializing app
-const app = express()
-app.use(express.json())
-app.use(cookieParser())
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(fileUpload())
-app.use(cors())
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
+app.use(cors());
 
 // app routes
-app.use("/api/v1/user", userRouter)
-app.use("/api/v1/note", noteRouter)
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/note", noteRouter);
 
-app.use(errorMiddleware)
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-module.exports = app
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+});
+
+app.use(errorMiddleware);
+
+module.exports = app;
