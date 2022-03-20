@@ -9,9 +9,10 @@ const sendEmail = require("../utils/sendEmail");
 
 // register user
 exports.registerUser = catchAsyncError(async (req, res, next) => {
+  // console.log(req.body);
   const { name, email, password, avatar } = req.body;
-  const secure_url = process.env.DEFAULT_PROFILE_URL;
-  const public_id = process.env.DEFAULT_PROFILE_ID;
+  var secure_url = process.env.DEFAULT_PROFILE_URL;
+  var public_id = process.env.DEFAULT_PROFILE_ID;
   if (avatar !== "") {
     const myCloud = await cloudinary.v2.uploader.upload(avatar, {
       folder: "notes_user_avatar",

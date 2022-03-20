@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./Login.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
-import { loginUser, registerUser } from "../../features/userSlice";
+import { clearErrors, loginUser, registerUser } from "../../features/userSlice";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../MetaData";
 
@@ -15,7 +15,7 @@ const Login = () => {
   const alert = useAlert();
   const navigate = useNavigate();
 
-  const { isAuthenticated, error} = useSelector((state) => state.user);
+  const { isAuthenticated, error } = useSelector((state) => state.user);
 
   const [login, setLogin] = useState(true);
   const [name, setName] = useState("");
@@ -55,16 +55,16 @@ const Login = () => {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", photo);
-
     dispatch(registerUser(myForm));
   };
 
   useEffect(() => {
     if (error) {
-      alert.error(error)
+      alert.error(error);
+      dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate("/")
+      navigate("/");
     }
   }, [dispatch, error, alert, isAuthenticated, navigate]);
 
@@ -154,6 +154,7 @@ const Login = () => {
                 accept="image/*"
                 name="avatar"
                 onChange={registerDataChange}
+                required
               />
             </div>
             <input type="submit" value="Register" className="btn" />
