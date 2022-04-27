@@ -203,7 +203,7 @@ export const userSlice = createSlice({
       state.isAuthenticated = false;
       state.error = action.payload;
       state.user = null;
-      console.log(action.payload)
+      console.log(action.error.message)
     },
 
     [registerUser.pending]: (state, action) => {
