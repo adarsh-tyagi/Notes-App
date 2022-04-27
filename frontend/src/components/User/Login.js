@@ -60,6 +60,7 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
+      console.log(error)
       alert.error(error);
       dispatch(clearUserErrors());
     }
