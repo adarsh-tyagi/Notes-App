@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadNotes, clearNoteErrors, clearNoteMessage } from "../../features/noteSlice";
+import {clearUserErrors, clearUserMessage} from "../../features/userSlice"
 import Loader from "../Loader/Loader";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NoteCard from "./NoteCard";
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import {useAlert} from "react-alert"
 
 const Home = () => {
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, error: userError, message: userMessage } = useSelector((state) => state.user);
   const { loading, notes, error, message } = useSelector((state) => state.note);
 
   const navigate = useNavigate();
@@ -26,9 +27,17 @@ const Home = () => {
       alert.error(error)
       dispatch(clearNoteErrors());
     }
+    if (userError) {
+      alert.error(userError)
+      dispatch(clearUserErrors())
+    }
     if (message) {
       alert.info(message)
       dispatch(clearNoteMessage())
+    }
+    if (userMessage) {
+      alert.info(userMessage)
+      dispatch(clearUserMessage())
     }
     dispatch(loadNotes());
   }, [dispatch, error, alert]);
