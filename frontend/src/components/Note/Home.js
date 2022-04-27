@@ -40,7 +40,7 @@ const Home = () => {
       dispatch(clearUserMessage())
     }
     dispatch(loadNotes());
-  }, [dispatch, error, alert]);
+  }, [dispatch, error, alert, userError, userMessage]);
 
   return (
     <Fragment>
