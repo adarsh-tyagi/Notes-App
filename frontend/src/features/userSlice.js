@@ -186,7 +186,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
       state.user = null;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [loginUser.pending]: (state, action) => {
@@ -201,9 +201,8 @@ export const userSlice = createSlice({
     [loginUser.rejected]: (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
-      state.error = action.payload;
+      state.error = action.error.message;
       state.user = null;
-      console.log(action.error.message)
     },
 
     [registerUser.pending]: (state, action) => {
@@ -219,7 +218,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
       state.user = null;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [logoutUser.pending]: (state, action) => {
@@ -233,7 +232,7 @@ export const userSlice = createSlice({
     },
     [logoutUser.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [updateUser.pending]: (state, action) => {
@@ -250,7 +249,7 @@ export const userSlice = createSlice({
       state.loading = false;
       // state.isAuthenticated = false;
       // state.user = null;
-      state.error = action.payload;
+      state.error = action.error.message;
       // state.isUpdated = false;
     },
 
@@ -267,7 +266,7 @@ export const userSlice = createSlice({
     [deleteUser.rejected]: (state, action) => {
       state.loading = false;
       // state.isDeleted = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [forgotPasswordUser.pending]: (state, action) => {
@@ -279,7 +278,7 @@ export const userSlice = createSlice({
     },
     [forgotPasswordUser.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [resetPasswordUser.pending]: (state, action) => {
@@ -291,7 +290,7 @@ export const userSlice = createSlice({
     },
     [resetPasswordUser.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
   },
 });

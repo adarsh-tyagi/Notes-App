@@ -121,7 +121,7 @@ export const noteSlice = createSlice({
     [loadNotes.rejected]: (state, action) => {
       state.loading = false;
       state.notes = [];
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [loadNoteDetails.pending]: (state, action) => {
@@ -136,7 +136,7 @@ export const noteSlice = createSlice({
     [loadNoteDetails.rejected]: (state, action) => {
       state.loadig = false;
       state.note = null;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [createNote.pending]: (state, action) => {
@@ -149,7 +149,7 @@ export const noteSlice = createSlice({
     },
     [createNote.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [editNote.pending]: (state, action) => {
@@ -162,7 +162,7 @@ export const noteSlice = createSlice({
     },
     [editNote.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
 
     [deleteNote.pending]: (state, action) => {
@@ -175,7 +175,7 @@ export const noteSlice = createSlice({
     },
     [deleteNote.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error.message;
     },
   },
 });
