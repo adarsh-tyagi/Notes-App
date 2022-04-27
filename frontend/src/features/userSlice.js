@@ -165,9 +165,12 @@ export const userSlice = createSlice({
   },
 
   reducers: {
-    clearErrors: (state) => {
+    clearUserErrors: (state) => {
       state.error = null;
-    }, 
+    },
+    clearUserMessage: (state) => {
+      state.message = null
+    }
   },
   extraReducers: {
     [loadUser.pending]: (state, action) => {
@@ -292,6 +295,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearErrors } = userSlice.actions;
+export const { clearUserErrors, clearUserMessage } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -3,10 +3,11 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  clearErrors,
+  clearNoteErrors,
   deleteNote,
   editNote,
   loadNotes,
+  clearNoteMessage
 } from "../../features/noteSlice";
 import Loader from "../Loader/Loader";
 import MetaData from "../MetaData";
@@ -43,14 +44,15 @@ const Note = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      // console.log(error);
       alert.error(error)
-      dispatch(clearErrors());
+      dispatch(clearNoteErrors());
       navigate("/");
     }
     if (message) {
-      console.log(message);
+      // console.log(message);
       alert.info(message)
+      dispatch(clearNoteMessage())
     }
     // dispatch(loadNoteDetails(id));
     const note = notes.find((item) => item._id === id);

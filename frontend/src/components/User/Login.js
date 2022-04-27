@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./Login.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
-import { clearErrors, loginUser, registerUser } from "../../features/userSlice";
+import { clearUserErrors, loginUser, registerUser } from "../../features/userSlice";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../MetaData";
 
@@ -61,7 +61,7 @@ const Login = () => {
   useEffect(() => {
     if (error) {
       alert.error(error);
-      dispatch(clearErrors());
+      dispatch(clearUserErrors());
     }
     if (isAuthenticated) {
       navigate("/");

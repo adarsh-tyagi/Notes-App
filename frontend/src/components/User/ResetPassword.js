@@ -4,7 +4,7 @@ import PasswordIcon from "@mui/icons-material/Password";
 import Loader from "../Loader/Loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPasswordUser } from "../../features/userSlice";
+import { resetPasswordUser, clearUserErrors, clearUserMessage } from "../../features/userSlice";
 import { useAlert } from "react-alert";
 import MetaData from "../MetaData";
 
@@ -32,10 +32,12 @@ const ResetPassword = () => {
   useEffect(() => {
     if (error) {
       alert.error(error)
+      dispatch(clearUserErrors())
     }
     if (message) {
-      console.log(message);
+      // console.log(message);
       alert.info(message)
+      dispatch(clearUserMessage())
       navigate("/signin");
     }
   }, [message, navigate, alert, error]);

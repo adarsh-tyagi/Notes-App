@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, loadNotes } from "../../features/noteSlice";
+import { loadNotes, clearNoteErrors, clearNoteMessage } from "../../features/noteSlice";
 import Loader from "../Loader/Loader";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NoteCard from "./NoteCard";
@@ -22,12 +22,13 @@ const Home = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      // console.log(error);
       alert.error(error)
-      dispatch(clearErrors());
+      dispatch(clearNoteErrors());
     }
     if (message) {
       alert.info(message)
+      dispatch(clearNoteMessage())
     }
     dispatch(loadNotes());
   }, [dispatch, error, alert]);

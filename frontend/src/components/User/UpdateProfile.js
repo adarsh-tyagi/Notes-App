@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateUser, loadUser } from "../../features/userSlice";
+import { updateUser, loadUser, clearUserErrors, clearUserMessage } from "../../features/userSlice";
 import Loader from "../Loader/Loader";
 import PersonIcon from "@mui/icons-material/Person";
 import "./UpdateProfile.css"
@@ -47,9 +47,11 @@ const UpdateProfile = () => {
   useEffect(() => {
     if (error) {
       alert.error(error)
+      dispatch(clearUserErrors())
     }
     if (message) {
       alert.info(message)
+      dispatch(clearUserMessage())
     }
     if (isAuthenticated === false) {
       navigate("/signin");

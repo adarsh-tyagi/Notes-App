@@ -101,9 +101,12 @@ export const noteSlice = createSlice({
   },
 
   reducers: {
-    clearErrors: (state) => {
+    clearNoteErrors: (state) => {
       state.error = null;
     },
+    clearNoteMessage: (state) => {
+      state.message = null
+    }
   }, 
 
   extraReducers: {
@@ -177,6 +180,6 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { clearErrors } = noteSlice.actions;
+export const { clearNoteErrors, clearNoteMessage } = noteSlice.actions;
 
 export default noteSlice.reducer;

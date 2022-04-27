@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useAlert } from "react-alert";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteUser, logoutUser } from "../../features/userSlice";
+import { deleteUser, logoutUser, clearUserErrors } from "../../features/userSlice";
 import Loader from "../Loader/Loader";
 import "./Profile.css";
 import MetaData from "../MetaData"
@@ -26,6 +26,7 @@ const Profile = () => {
   useEffect(() => {
     if (error) {
       alert.error(error)
+      dispatch(clearUserErrors())
     }
     if (isAuthenticated === false) {
       navigate("/signin");

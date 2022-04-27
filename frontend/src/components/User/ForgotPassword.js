@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import EmailIcon from "@mui/icons-material/Email";
 import { useAlert } from "react-alert";
 import { useSelector, useDispatch } from "react-redux";
-import { forgotPasswordUser } from "../../features/userSlice";
+import { forgotPasswordUser, clearUserErrors, clearUserMessage} from "../../features/userSlice";
 import Loader from "../Loader/Loader";
 import MetaData from "../MetaData";
 
@@ -23,9 +23,11 @@ const ForgotPassword = () => {
   useEffect(() => {
     if (error) {
       alert.error(error);
+      dispatch(clearUserErrors())
     }
     if (message) {
       alert.success(message);
+      dispatch(clearUserMessage())
     }
   }, [ message, error, alert]);
 
