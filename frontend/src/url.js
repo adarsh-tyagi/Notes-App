@@ -1,1 +1,1 @@
-export const API_URL = " https://adarsh-notesapp.herokuapp.com/api/v1";
+export const API_URL = "https://notes-c164.onrender.com/api/v1";
